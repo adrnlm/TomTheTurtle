@@ -33,16 +33,58 @@
 	  							 </IndexedLineSet>
 							</Shape>
 
+							<!-- Glass Tank -->
+							<Shape DEF='Tank'>
+								<IndexedFaceSet
+								solid='false'
+								coordIndex='
+								0 1 5 4 -1
+								4 7 3 0 -1
+								3 7 6 2 -1
+								2 6 5 1 -1
+								7 6 5 4 -1'>
+
+								<Coordinate point='
+								-5.1 5 -5.1
+								5.1 5 -5.1
+								5.1 5 5.1
+								-5.1 5 5.1
+								-5.1 -3.1 -5.1
+								5.1 -3.1 -5.1
+								5.1 -3.1 5.1
+								-5.1 -3.1 5.1
+								' />
+								</IndexedFaceSet>
+
+								<Appearance DEF='glass'>
+									<Material
+									transparency='.8'
+									diffusecolor='1 1 1' />
+								</Appearance>
+								<Viewpoint position='0 0 20'/>
+							</Shape>
+
 							<!-- Water -->
 							<Shape DEF="Water">
 								<IndexedFaceSet
 								solid='false'
-								coordIndex='0 1 2 3 -1'>
+								coordIndex='
+								0 1 2 3 -1
+								0 1 5 4 -1
+								4 7 3 0 -1
+								3 7 6 2 -1
+								2 6 5 1 -1
+								7 6 5 4 -1'>
+
 								<Coordinate point='
 								-5 0 -5
 								5 0 -5
 								5 0 5
 								-5 0 5
+								-5 -3 -5
+								5 -3 -5
+								5 -3 5
+								-5 -3 5
 								' />
 								</IndexedFaceSet>
 
@@ -50,14 +92,12 @@
 									<Material
 									transparency='0.5'
 									diffusecolor='0 1 1' />
-
 								</Appearance>
 							</Shape>
 
-
 							<!-- TURTLE -->
 							<Transform DEF='Root'>
-								<!-- BODY -->
+								<!-- BODY/ SHELL -->
 								<Shape DEF="Dode">
 									<IndexedFaceSet
 									solid='false'
@@ -85,13 +125,22 @@
 										.86 0 -.5
 										0 -0.5 0
 										'/>
+
 									</IndexedFaceSet>
 
 									<Appearance DEF='TurtleColor'>
 										<Material
 										diffusecolor='.9 .35 0.05' />
 									</Appearance>
+									<!-- ADDING TEXTURE -->
+									<Appearance>
+										<ImageTexture url='./shell-tex.png'/>
+
+
+									</Appearance>
 								</Shape>
+								<!-- TOUCH SENSOR -->
+								<TouchSensor DEF='activateAnimation'/>
 
 								<!-- NECK -->
 								<Transform DEF='NeckJoint'
@@ -155,22 +204,25 @@
 									</Transform>
 								</Transform>
 
-
-								<!-- LIMBs -->
-
+								<!-- FRONT LEFT HIP JOINT -->
 								<Transform DEF='FLhip' rotation='0 1 0 1.04'>
 									<Transform DEF='LHipJoint' translation='.86 0 0'>
 										<Shape USE='Axes'/>
+										<!-- UPPER LEG -->
 										<Transform DEF='UpperLeg' translation='.5 0 0'>
 											<Shape USE='Octa'/>
+											<!-- KNEE JOINT -->
 											<Transform DEF='KneeJoint' translation='.5 0 0'>
 												<Transform rotation='0 0 1 5.49'>
 													<Shape USE='Axes'/>
+													<!-- LOWER LEG -->
 													<Transform DEF='LowerLeg' translation='.5 0 0'>
 														<Shape USE='Octa'/>
+															<!-- ANKLE -->
 															<Transform DEF='Ankle' translation='.5 0 0'>
 																<Transform rotation='0 0 1 5.49'>
 																	<Shape USE='Axes'/>
+																		<!-- FOOT -->
 																		<Transform DEF='Foot' translation='.5 0 0'>
 																			<Shape USE='Octa'/>
 																		</Transform>
@@ -182,30 +234,36 @@
 										</Transform>
 									</Transform>
 								</Transform>
-
+								<!-- BACK LEFT HIP JOINT -->
 								<Transform DEF='BLhip' rotation='0 1 0 2.09'>
 									<Transform USE='LHipJoint'/>
 								</Transform>
-
+								<!-- BACK RIGHT HIP JOINT -->
 								<Transform DEF='BRhip' rotation='0 1 0 4.18'>
 									<Transform DEF='RHipJoint' translation='.86 0 0'>
 										<Shape USE='Axes'/>
 										<Transform USE='UpperLeg'/>
 									</Transform>
 								</Transform>
-
+								<!-- FRONT RIGHTT HIP JOINT -->
 								<Transform DEF='FRhip' rotation='0 1 0 5.23'>
 									<Transform USE='RHipJoint'/>
 								</Transform>
 
 							</Transform>
 
+							<!-- TIME SENSOR -->
 							<TimeSensor DEF='Timer'
 							cycleInterval='2'
 							loop='true'
-							enabled='true'
-							/>
+							enabled='false'/>
 
+							<!-- ANIMATION BUTTON -->
+							<ROUTE
+							fromNode='activateAnimation'
+							fromField='isActive'
+							toNode='Timer'
+							toField='enabled'/>
 
 							<!-- HEAD ANIMATION -->
 							<OrientationInterpolator DEF='bobHead'
@@ -224,7 +282,6 @@
 							fromField='value_changed'
 							toNode='NeckJoint'
 							toField='rotation'/>
-
 
 							<!-- LEFT LIMB ANIMATION -->
 							<OrientationInterpolator DEF='moveLeftHipJoint'
