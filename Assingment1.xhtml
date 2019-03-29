@@ -135,8 +135,8 @@
 								</Transform>
 
 								<!-- TAIL -->
-								<Transform DEF='TailJoint' rotation='0 1 0 3.14'>
-									<Transform translation='.86 0 0'>
+								<Transform rotation='0 1 0 3.14'>
+									<Transform DEF='TailJoint' translation='.86 0 0'>
 										<Shape USE='Axes'/>
 										<Shape DEF='Tail'>
 											<IndexedFaceSet
@@ -157,8 +157,9 @@
 
 
 								<!-- LIMBs -->
+
 								<Transform DEF='FLhip' rotation='0 1 0 1.04'>
-									<Transform DEF='HipJoint' translation='.86 0 0'>
+									<Transform DEF='LHipJoint' translation='.86 0 0'>
 										<Shape USE='Axes'/>
 										<Transform DEF='UpperLeg' translation='.5 0 0'>
 											<Shape USE='Octa'/>
@@ -183,20 +184,105 @@
 								</Transform>
 
 								<Transform DEF='BLhip' rotation='0 1 0 2.09'>
-									<Transform USE='HipJoint'/>
+									<Transform USE='LHipJoint'/>
 								</Transform>
 
-								<Transform DEF='BLhip' rotation='0 1 0 4.18'>
-									<Transform USE='HipJoint'/>
+								<Transform DEF='BRhip' rotation='0 1 0 4.18'>
+									<Transform DEF='RHipJoint' translation='.86 0 0'>
+										<Shape USE='Axes'/>
+										<Transform USE='UpperLeg'/>
+									</Transform>
 								</Transform>
 
-								<Transform DEF='BLhip' rotation='0 1 0 5.23'>
-									<Transform USE='HipJoint'/>
+								<Transform DEF='FRhip' rotation='0 1 0 5.23'>
+									<Transform USE='RHipJoint'/>
 								</Transform>
 
 							</Transform>
 
+							<TimeSensor DEF='Timer'
+							cycleInterval='2'
+							loop='true'
+							enabled='true'
+							/>
 
+
+							<!-- HEAD ANIMATION -->
+							<OrientationInterpolator DEF='bobHead'
+							key='0 .5 1'
+							keyValue='
+							0 0 1 0,
+							0 0 1 .43,
+							0 0 1 0'/>
+							<ROUTE
+							fromNode='Timer'
+							fromField='fraction_changed'
+							toNode='bobHead'
+							toField='set_fraction'/>
+							<ROUTE
+							fromNode='bobHead'
+							fromField='value_changed'
+							toNode='NeckJoint'
+							toField='rotation'/>
+
+
+							<!-- LEFT LIMB ANIMATION -->
+							<OrientationInterpolator DEF='moveLeftHipJoint'
+							key='0 .25 .5 .75 1'
+							keyValue='
+							0 1 0 0,
+							0 1 0 5.75,
+							0 1 0 0,
+							0 1 0 .523,
+							0 1 0 0'/>
+							<ROUTE
+							fromNode='Timer'
+							fromField='fraction_changed'
+							toNode='moveLeftHipJoint'
+							toField='set_fraction'/>
+							<ROUTE
+							fromNode='moveLeftHipJoint'
+							fromField='value_changed'
+							toNode='LHipJoint'
+							toField='rotation'/>
+
+							<!-- RIGHT LIMB ANIMATION -->
+							<OrientationInterpolator DEF='moveRightHipJoint'
+							key='0 .25 .5 .75 1'
+							keyValue='
+							0 1 0 0,
+							0 1 0 .523,
+							0 1 0 0,
+							0 1 0 5.75,
+							0 1 0 0'/>
+							<ROUTE
+							fromNode='Timer'
+							fromField='fraction_changed'
+							toNode='moveRightHipJoint'
+							toField='set_fraction'/>
+							<ROUTE
+							fromNode='moveRightHipJoint'
+							fromField='value_changed'
+							toNode='RHipJoint'
+							toField='rotation'/>
+
+							<!-- TAIL ANIMATION -->
+							<OrientationInterpolator DEF='bobTail'
+							key='0 .5 1'
+							keyValue='
+							0 0 1 0,
+							0 0 1 5.75,
+							0 0 1 0'/>
+							<ROUTE
+							fromNode='Timer'
+							fromField='fraction_changed'
+							toNode='bobTail'
+							toField='set_fraction'/>
+							<ROUTE
+							fromNode='bobTail'
+							fromField='value_changed'
+							toNode='TailJoint'
+							toField='rotation'/>
 
       		</Scene>
     		</X3D>
