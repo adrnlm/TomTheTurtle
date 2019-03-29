@@ -19,15 +19,17 @@
 									coordIndex="0 1 -1 0 2 -1 0 3 -1"
 									colorPerVertex="true"
 									colorIndex="0 0 -1 1 1 -1 2 2 -1">
-	    								<Coordinate point=
-											"0 0 0
-											1.5 0 0
-											0 1.5 0
-											0 0 1.5 "/>
-	    								<Color color=
-											"1 0 0
-											 0 1 0
-											 0 0 1 "/>
+	    								<Coordinate point="
+											0 0 0
+											.8 0 0
+											0 .8 0
+											0 0 .8
+											"/>
+	    								<Color color="
+											1 0 0
+											0 1 0
+										 	0 0 1
+											 "/>
 	  							 </IndexedLineSet>
 							</Shape>
 
@@ -55,7 +57,7 @@
 
 							<!-- TURTLE -->
 							<Transform DEF='Root'>
-								<!-- Torso -->
+								<!-- BODY -->
 								<Shape DEF="Dode">
 									<IndexedFaceSet
 									solid='false'
@@ -92,11 +94,11 @@
 								</Shape>
 
 								<!-- NECK -->
-								<Transform DEF='Neck'
-								translation='.86 0 0'
-								rotation='0 0 1 0'>
+								<Transform DEF='NeckJoint'
+								translation='.86 0 0'>
 								<Shape USE='Axes'/>
 									<Transform translation='.5 0 0'>
+										<!-- HEAD -->
 										<Shape DEF='Octa'>
 											<IndexedFaceSet
 											solid='false'
@@ -115,8 +117,83 @@
 											</IndexedFaceSet>
 											<Appearance USE='TurtleColor'/>
 										</Shape>
+											<!-- EYES -->
+											<Transform scale='.1 .1 .1'>
+												<Transform translation='2.3 .2 1.5'>
+													<Shape DEF='Eye'>
+														<Sphere/>
+														<Appearance DEF="EyeColor">
+															<Material diffusecolor='0 0 0'/>
+														</Appearance>
+													</Shape>
+												</Transform>
+												<Transform translation='2.3 .2 -1.5'>
+													<Shape USE='Eye'/>
+												</Transform>
+											</Transform>
 									</Transform>
 								</Transform>
+
+								<!-- TAIL -->
+								<Transform DEF='TailJoint' rotation='0 1 0 3.14'>
+									<Transform translation='.86 0 0'>
+										<Shape USE='Axes'/>
+										<Shape DEF='Tail'>
+											<IndexedFaceSet
+											solid='false'
+											coordIndex='
+											0 1 2 0 -1
+											'>
+												<Coordinate point='
+												0 0 .3
+												0 0 -.3
+												.5 0 0
+												'/>
+											</IndexedFaceSet>
+											<Appearance USE='TurtleColor'/>
+										</Shape>
+									</Transform>
+								</Transform>
+
+
+								<!-- LIMBs -->
+								<Transform DEF='FLhip' rotation='0 1 0 1.04'>
+									<Transform DEF='HipJoint' translation='.86 0 0'>
+										<Shape USE='Axes'/>
+										<Transform DEF='UpperLeg' translation='.5 0 0'>
+											<Shape USE='Octa'/>
+											<Transform DEF='KneeJoint' translation='.5 0 0'>
+												<Transform rotation='0 0 1 5.49'>
+													<Shape USE='Axes'/>
+													<Transform DEF='LowerLeg' translation='.5 0 0'>
+														<Shape USE='Octa'/>
+															<Transform DEF='Ankle' translation='.5 0 0'>
+																<Transform rotation='0 0 1 5.49'>
+																	<Shape USE='Axes'/>
+																		<Transform DEF='Foot' translation='.5 0 0'>
+																			<Shape USE='Octa'/>
+																		</Transform>
+																</Transform>
+															</Transform>
+													</Transform>
+												</Transform>
+											</Transform>
+										</Transform>
+									</Transform>
+								</Transform>
+
+								<Transform DEF='BLhip' rotation='0 1 0 2.09'>
+									<Transform USE='HipJoint'/>
+								</Transform>
+
+								<Transform DEF='BLhip' rotation='0 1 0 4.18'>
+									<Transform USE='HipJoint'/>
+								</Transform>
+
+								<Transform DEF='BLhip' rotation='0 1 0 5.23'>
+									<Transform USE='HipJoint'/>
+								</Transform>
+
 							</Transform>
 
 
