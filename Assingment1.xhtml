@@ -114,7 +114,13 @@
 									4 5 7 -1
 									5 6 7 -1
 									6 1 7 -1
-									'>
+									'
+									texCoordIndex='
+									0 1 2 0 -1
+									0 2 3 0 -1
+									0 3 4 0 -1
+									0 4 5 0 -1
+									0 5 1 0 -1'>
 										<Coordinate point='
 										0 0.5 0
 										.86 0 .5
@@ -125,7 +131,14 @@
 										.86 0 -.5
 										0 -0.5 0
 										'/>
-
+										<TextureCoordinate point='
+										.5 .5,
+										0 0.25,
+										0.5 0,
+										1 0.25,
+										1 0.75,
+										0.5 1,
+										0 0.75'/>
 									</IndexedFaceSet>
 
 									<Appearance DEF='TurtleColor'>
@@ -134,9 +147,7 @@
 									</Appearance>
 									<!-- ADDING TEXTURE -->
 									<Appearance>
-										<ImageTexture url='./shell-tex.png'/>
-
-
+										<ImageTexture url='./uv_grid.jpg'/>
 									</Appearance>
 								</Shape>
 								<!-- TOUCH SENSOR -->
